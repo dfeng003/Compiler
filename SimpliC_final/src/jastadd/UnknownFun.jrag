@@ -1,0 +1,12 @@
+aspect UnknownFun {
+	syn nta UnknownFun Program.unknownFun() = new UnknownFun("<unknown>");
+	
+	inh UnknownFun ASTNode.unknownFun();
+	
+	eq Program.getChild().unknownFun() = unknownFun();
+	
+	syn boolean IdFun.isUnknown() = false;
+	eq UnknownFun.isUnknown() = true;
+	
+	syn int UnknownFun.paraNum() = 0;
+}

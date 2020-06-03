@@ -1,0 +1,6 @@
+Error at line 2: symbol 'a' is already declared!
+Error at line 3: symbol 'c' is not declared
+Error at line 6: the calling of symbol 'print' is wrong
+Error at line 7: symbol 'd' is not declared
+Error at line 10: symbol 'print' is already declared!
+Error at line 13: symbol 'gcd1' is already declared!

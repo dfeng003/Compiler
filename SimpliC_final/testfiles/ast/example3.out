@@ -1,0 +1,25 @@
+Program
+  List
+    Func_del
+      IdFun ID="gcd2"
+      List
+        Parafactor
+          IdVar ID="a"
+        Parafactor
+          IdVar ID="b"
+      List
+        IfStmt
+          Eq
+            IdUse ID="b"
+            Numeral NUMERAL="0"
+          Block
+            List
+              Return
+                IdUse ID="a"
+          Opt
+        Return
+          Func_call
+            IdCall ID="gcd2"
+            List
+              IdUse ID="b"
+              IdUse ID="a"

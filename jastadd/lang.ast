@@ -1,0 +1,60 @@
+Program ::= Func_del*;
+
+Func_del ::= IdFun Parafactor* Stmt*; //differ func_del block with normal block
+
+Block ::= Stmt*;
+
+IdFun ::= <ID>;
+UnknownFun : IdFun;
+PreFun ::= IdFun;
+Parafactor ::= IdVar; //decl
+IdVar ::= <ID>;
+UnknownVar : IdVar;
+abstract Stmt;
+
+Asst : Stmt ::= To:IdUse From:Expr;
+
+
+Return : Stmt ::= Expr;
+
+abstract While : Stmt;
+While_brace : While ::= Expr Block;
+While_one : While ::= Expr Stmt;
+
+abstract If : Stmt;
+If_brace : If ::= Expr Block;
+If_one : If ::= Expr Stmt;
+
+abstract If_else : Stmt;
+If_else_brace : If_else ::= If Block;
+If_else_one : If_else ::= If Stmt;
+
+Func_call_stmt : Stmt ::= IdCall Expr*;
+IdCall ::= <ID>;
+
+Var_del : Stmt ::= IdVar [Default:Expr]; //decl
+
+abstract Expr;
+IdUse : Expr ::= <ID>;
+Numeral : Expr ::= <NUMERAL>;
+
+Func_call : Expr ::= IdCall Expr*;
+
+abstract Type;
+IntType: Type;
+BoolType: Type;
+UnknownType: Type;
+
+Par : Expr ::= Expr;
+Mul : Expr ::= Left:Expr Right:Expr;
+Div : Expr ::= Left:Expr Right:Expr;
+Remi : Expr ::= Left:Expr Right:Expr;
+Plus : Expr ::= Left:Expr Right:Expr;
+Minus : Expr ::= Left:Expr Right:Expr;
+Less : Expr ::= Left:Expr Right:Expr;
+Great : Expr ::= Left:Expr Right:Expr;
+LessEq : Expr ::= Left:Expr Right:Expr;
+GreatEq : Expr ::= Left:Expr Right:Expr;
+Eq : Expr ::= Left:Expr Right:Expr;
+NotEq : Expr ::= Left:Expr Right:Expr;
+Minn : Expr ::= Expr;

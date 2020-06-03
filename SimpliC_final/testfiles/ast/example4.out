@@ -1,0 +1,58 @@
+Program
+  List
+    Func_del
+      IdFun ID="main"
+      List
+      List
+        Var_del
+          IdVar ID="a"
+          Opt
+        Var_del
+          IdVar ID="b"
+          Opt
+        Asst
+          IdUse ID="a"
+          Func_call
+            IdCall ID="read"
+            List
+        Asst
+          IdUse ID="b"
+          Func_call
+            IdCall ID="read"
+            List
+        Func_call_stmt
+          IdCall ID="print"
+          List
+            Func_call
+              IdCall ID="gcd1"
+              List
+                IdUse ID="a"
+                IdUse ID="b"
+        Func_call_stmt
+          IdCall ID="print"
+          List
+            Func_call
+              IdCall ID="gcd2"
+              List
+                IdUse ID="a"
+                IdUse ID="b"
+        Var_del
+          IdVar ID="diff"
+          Opt
+            Minus
+              Func_call
+                IdCall ID="gcd1"
+                List
+                  IdUse ID="a"
+                  IdUse ID="b"
+              Func_call
+                IdCall ID="gcd2"
+                List
+                  IdUse ID="a"
+                  IdUse ID="b"
+        Func_call_stmt
+          IdCall ID="print"
+          List
+            IdUse ID="diff"
+        Return
+          Numeral NUMERAL="0"

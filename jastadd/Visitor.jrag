@@ -1,0 +1,152 @@
+aspect Visitor {
+	/**
+	 * Visitor interface for SimpliC language. Each concrete node type must
+	 * have a visit method.
+	 */
+	public interface Visitor {
+		public Object visit(List node, Object data);
+		public Object visit(Opt node, Object data);
+		public Object visit(Program node, Object data);
+		public Object visit(Func_del node, Object data);
+		public Object visit(Parafactor node, Object data);
+		public Object visit(IdFun node, Object data);
+		public Object visit(IdVar node, Object data);
+		public Object visit(IdUse node, Object data);
+		public Object visit(IdCall node, Object data);
+		public Object visit(Asst node, Object data);
+		public Object visit(Return node, Object data);
+		public Object visit(While_brace node, Object data);
+		public Object visit(While_one node, Object data);
+		public Object visit(If_brace node, Object data);
+		public Object visit(If_one node, Object data);
+		public Object visit(If_else_brace node, Object data);
+		public Object visit(If_else_one node, Object data);
+		public Object visit(Func_call_stmt node, Object data);
+		public Object visit(Var_del node, Object data);
+		public Object visit(Func_call node, Object data);
+		public Object visit(Par node, Object data);
+		public Object visit(Mul node, Object data);
+		public Object visit(Div node, Object data);
+		public Object visit(Remi node, Object data);
+		public Object visit(Plus node, Object data);
+		public Object visit(Minus node, Object data);
+		public Object visit(Less node, Object data);
+		public Object visit(Great node, Object data);
+		public Object visit(LessEq node, Object data);
+		public Object visit(GreatEq node, Object data);
+		public Object visit(Eq node, Object data);
+		public Object visit(NotEq node, Object data);
+		public Object visit(Minn node, Object data);
+		public Object visit(Numeral node, Object data);
+		public Object visit(Block node, Object data);
+	}
+
+	public Object ASTNode.accept(Visitor visitor, Object data) {
+		throw new Error("Visitor: accept method not available for " + getClass().getName());
+	}
+	public Object List.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Opt.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Program.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Func_del.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Parafactor.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object IdFun.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object IdVar.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object IdUse.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object IdCall.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Asst.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Return.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object While_brace.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object While_one.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object If_brace.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object If_one.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object If_else_brace.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object If_else_one.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Func_call_stmt.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Var_del.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Func_call.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Par.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Mul.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Div.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Remi.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Plus.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Minus.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Less.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Great.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object LessEq.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object GreatEq.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Eq.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object NotEq.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Minn.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Numeral.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+	public Object Block.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
+}

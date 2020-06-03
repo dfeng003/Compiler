@@ -1,0 +1,24 @@
+Program
+  List
+    Func_del
+      IdFun ID="main"
+      List
+      List
+        Var_del
+          IdVar ID="a"
+          Opt
+        Var_del
+          IdVar ID="b"
+          Opt
+        Asst
+          IdUse ID="a"
+          Numeral NUMERAL="1"
+        Asst
+          IdUse ID="b"
+          Numeral NUMERAL="2"
+        Return
+          Plus
+            Mul
+              IdUse ID="a"
+              IdUse ID="b"
+            IdUse ID="a"

@@ -1,0 +1,68 @@
+//rx
+Program ::= Func_del*; //func_del == paramfunc
+
+Func_del ::= IdFun Parafactor* Stmt*; //differ func_del block with normal block
+//parafactor == param
+
+Parafactor ::= IdVar;
+IdVar ::= <ID>;// int + id
+IdFun ::= <ID>;//type + id
+
+UnknownFun : IdFun;
+PreFun ::= IdFun;
+
+UnknownVar : IdVar;
+
+abstract Stmt;
+
+Asst : Stmt ::= To:IdUse From:Expr; //asst ==assignment
+Return : Stmt ::= Expr; //return ==returnstmt
+Func_call_stmt : Stmt ::= IdCall Expr*; //func_call_stmt == funcstmt
+IdCall ::= <ID>;
+Var_del : Stmt ::= IdVar [Default:Expr]; //var_del ==declare
+
+Block :Stmt::= Stmt*;
+WhileStmt : Stmt ::= Expr Block;
+//abstract While : Stmt;
+//While_brace : While ::= Expr Block;
+//While_one : While ::= Expr Stmt;
+
+IfStmt : Stmt ::= Expr Then:Block [Else:Block];
+
+//abstract If : Stmt;
+//If_brace : If ::= Expr Block;
+//If_one : If ::= Expr Stmt;
+
+//abstract If_else : Stmt;
+//If_else_brace : If_else ::= If Block;
+//If_else_one : If_else ::= If Stmt;
+
+
+
+
+
+abstract Expr;
+IdUse : Expr ::= <ID>;
+Numeral : Expr ::= <NUMERAL>;
+
+Func_call : Expr ::= IdCall Expr*;//ok
+
+abstract Type;
+IntType: Type;
+BoolType: Type;
+UnknownType: Type;
+
+Par : Expr ::= Expr;
+Minn : Expr ::= Expr;
+
+Remi : Expr ::= Left:Expr Right:Expr;
+Plus : Expr ::= Left:Expr Right:Expr;
+Minus : Expr ::= Left:Expr Right:Expr;
+Mul : Expr ::= Left:Expr Right:Expr;
+Div : Expr ::= Left:Expr Right:Expr;
+Eq : Expr ::= Left:Expr Right:Expr;
+NotEq : Expr ::= Left:Expr Right:Expr;
+Less : Expr ::= Left:Expr Right:Expr;
+Great : Expr ::= Left:Expr Right:Expr;
+LessEq : Expr ::= Left:Expr Right:Expr;
+GreatEq : Expr ::= Left:Expr Right:Expr;

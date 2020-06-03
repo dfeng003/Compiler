@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="lang.TestPrettyPrinting" tests="12" skipped="0" failures="0" errors="0" timestamp="2019-10-17T11:24:41" hostname="DESKTOP-HLQTRRR" time="0.03">
+  <properties/>
+  <testcase name="runTest[ask1.in]" classname="lang.TestPrettyPrinting" time="0.002"/>
+  <testcase name="runTest[ask2.in]" classname="lang.TestPrettyPrinting" time="0.002"/>
+  <testcase name="runTest[ask3.in]" classname="lang.TestPrettyPrinting" time="0.001"/>
+  <testcase name="runTest[ask4.in]" classname="lang.TestPrettyPrinting" time="0.002"/>
+  <testcase name="runTest[example.in]" classname="lang.TestPrettyPrinting" time="0.002"/>
+  <testcase name="runTest[example2.in]" classname="lang.TestPrettyPrinting" time="0.001"/>
+  <testcase name="runTest[let.in]" classname="lang.TestPrettyPrinting" time="0.002"/>
+  <testcase name="runTest[let1.in]" classname="lang.TestPrettyPrinting" time="0.003"/>
+  <testcase name="runTest[let2.in]" classname="lang.TestPrettyPrinting" time="0.003"/>
+  <testcase name="runTest[let3.in]" classname="lang.TestPrettyPrinting" time="0.003"/>
+  <testcase name="runTest[let4.in]" classname="lang.TestPrettyPrinting" time="0.002"/>
+  <testcase name="runTest[numerical.in]" classname="lang.TestPrettyPrinting" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

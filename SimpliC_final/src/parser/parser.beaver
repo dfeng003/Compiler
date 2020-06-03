@@ -1,0 +1,173 @@
+%class "LangParser";
+%package "lang.ast";
+
+%embed {:
+	static public class SyntaxError extends RuntimeException { public SyntaxError(String msg) {super(msg);}}
+	// Disable syntax error recovery
+	protected void recoverFromError(Symbol token, TokenStream in) {
+		throw new SyntaxError("Cannot recover from the syntax error");
+	}
+:};
+
+%terminals ID, NUMERAL, ASSIGN, IF,ELSE, WHILE, INT, RETURN, COMMA, BOOL;
+//Structure terminals
+%terminals LPAR, RPAR, LBRACKET, RBRACKET, SEMI;
+
+//Arith terminals
+%terminals ADD, SUB, MUL, DIV, MOD;
+
+//Comparsion terminals
+%terminals EQ, NEQ, LEQ, LTHN, GEQ, GTHN;
+
+%typeof program = "Program";
+%typeof func_del = "Func_del";
+%typeof idfun= "IdFun";
+%typeof funcStmt = "Func_call_stmt";
+%typeof idCall = "IdCall";
+
+%typeof func_list = "List";
+%typeof stmt = "Stmt";
+%typeof returnStmt = "Return";
+%typeof assign = "Asst";
+%typeof declare = "Var_del";
+%typeof idVar = "IdVar";
+%typeof idUse = "IdUse";
+%typeof numeral = "Numeral";
+%typeof funccall = "Func_call";
+%typeof term = "Expr";
+%typeof factor = "Expr";
+%typeof compare = "Expr";
+%typeof sum = "Expr";
+%typeof unaryplus = "Par";
+%typeof unaryminus = "Minn";
+%typeof stmt_list1 = "List";
+%typeof stmt_list2 = "List";
+%typeof expr ="Expr";
+%typeof param = "Parafactor";
+%typeof param_list1 = "List";
+%typeof param_list2 = "List";
+%typeof arg_list1 = "List";
+%typeof arg_list2 = "List";
+%typeof block= "Block";
+%typeof opt_block= "Opt";
+
+
+
+%goal program;
+
+
+
+
+
+program = func_list.a {: return new Program(a); :};
+
+func_list =
+         {: return new List(); :}
+        | func_list.a func_del.func {: return a.add(func); :};
+
+func_del  = idfun.id LPAR param_list2.p RPAR LBRACKET stmt_list2.t RBRACKET  {: return new Func_del (id,p,t); :};//create a new list?
+
+idfun = INT ID.id {:return new IdFun(id);:};
+
+param = idVar.id {: return new Parafactor(id); :};
+
+param_list1 = param.par {: return new List().add(par); :}
+       	 | param_list1.a COMMA param.par  {: return a.add(par); :};
+
+param_list2 =  {: return new List();:}
+		| param_list1;
+idVar = INT ID.id {:return new IdVar(id);:};
+
+
+
+stmt = ifStmt| whileStmt| declare | assign | returnStmt | funcStmt;
+
+returnStmt = RETURN expr.a SEMI {: return new Return(a);:};
+
+assign = idUse.id ASSIGN expr.a SEMI {:return new Asst(id,a);:};
+
+funcStmt = idCall.id LPAR arg_list2.l RPAR SEMI {:return new Func_call_stmt(id,l);:};
+
+idCall = ID.id {:return new IdCall(id);:};
+
+arg_list1 =
+        expr.a {: return new List().add(a); :}
+        | arg_list1.a COMMA expr.ar {: return a.add(ar); :}
+        ;
+arg_list2 = {: return new List();:}
+		| arg_list1;
+
+
+
+declare = idVar.a SEMI {: return new Var_del(a, new Opt());:} 
+	| idVar.a ASSIGN expr.b SEMI {: return new Var_del(a,new Opt(b));:}
+	;
+
+compare = sum.a EQ sum.b {: return new Eq(a,b);:}
+        | sum.a NEQ sum.b {: return new NotEq(a,b);:}
+        | sum.a GTHN sum.b {: return new Great(a,b);:}
+        | sum.a LTHN sum.b {: return new Less(a,b);:}
+        | sum.a GEQ sum.b {: return new GreatEq(a,b);:}
+        | sum.a LEQ sum.b {:return new LessEq(a,b);:}
+        ;
+
+
+
+expr = sum | compare;
+//take note of the priority here
+
+sum = 
+	sum.a ADD term.b {: return new Plus(a, b); :}
+	| sum.a SUB term.b {: return new Minus(a, b); :}
+	| term
+	;
+	
+
+term = 
+	 term.a MUL factor.b {: return new Mul(a, b); :}
+	| term.a DIV factor.b {: return new Div(a, b); :}
+	| term.a MOD factor.b {: return new Remi(a, b); :}
+	| factor
+	;
+	
+factor = numeral
+	| funcCall
+	| idUse
+	|LPAR sum.s RPAR  {: return s; :}
+	|unaryminus
+	|unaryplus
+	;
+unaryminus = SUB factor.f{: return new Minn(f);:};
+// use factor, not sum, otherwise will have conflict. //substraction and unaryminus is differentiated by comparing //the number of surrounding operands.
+unaryplus = ADD factor.f{: return new Par(f);:};
+
+funcCall = idCall.id LPAR arg_list2.l RPAR {: return new Func_call(id, l);:};
+
+
+numeral = NUMERAL.num {:return new Numeral(num);:};
+
+idUse = ID.id {:return new IdUse(id);:};
+
+
+block = LBRACKET RBRACKET {:return new Block(new List());:}
+	|LBRACKET stmt_list2.t RBRACKET {:return new Block(t);:};
+
+whileStmt = WHILE LPAR expr.a RPAR block.b {:return new WhileStmt(a, b);:};
+
+ifStmt = IF LPAR expr.a RPAR block.b opt_block.c {:return new IfStmt(a,b,c);:};
+
+opt_block = ELSE block.a {: return new Opt(a);:}
+	|{: return new Opt();:};
+
+
+stmt_list1 =
+	stmt.st {: return new List().add(st); :}
+	|stmt_list1.a stmt.st {: return a.add(st); :}
+	;
+
+stmt_list2 = stmt_list1
+	|{: return new List(); :};
+
+
+
+

@@ -1,0 +1,8 @@
+int gcd1(int a, int b) {
+while (a != c) {
+a = a - b;
+}
+print();
+read();
+return gcd2(a, b);
+}

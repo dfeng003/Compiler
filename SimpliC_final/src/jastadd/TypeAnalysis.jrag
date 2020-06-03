@@ -1,0 +1,146 @@
+aspect TypeAnalysis {
+
+	syn Type Expr.type();
+	
+	eq Numeral.type() = intType();
+	
+	eq Par.type() = getExpr().type();
+	
+	eq Mul.type() = intType();
+	eq Div.type() = intType();
+	eq Remi.type() = intType();
+	eq Plus.type() = intType();
+	eq Minus.type() = intType();
+	eq Minn.type() = intType();
+	
+	eq Less.type() = boolType();
+	eq Great.type() = boolType();
+	eq LessEq.type() = boolType();
+	eq GreatEq.type() = boolType();
+	eq Eq.type() = boolType();
+	eq NotEq.type() = boolType();
+	
+	syn Type IdCall.type() {
+		 if(getID().equals("read")){
+		 	return intType();
+		 }
+		 if(getID().equals("print")){
+		 	return intType();
+		 }
+		 return decl().type();
+	}
+	eq Func_call.type() = getIdCall().type();
+	
+	eq IdUse.type() = decl().type();
+	
+	inh Type IdVar.type();
+	inh Type IdFun.type();
+	
+	eq Var_del.getIdVar().type() = type();
+	eq Func_del.getChild().type() = type();
+	
+	syn Type Var_del.type() = intType();
+	syn Type Func_del.type() = intType();
+
+	eq Program.unknownVar().type() = unknownType();
+	eq Program.unknownFun().type() = unknownType();
+	
+	syn boolean Asst.compatibleTypes() = 
+		getFrom().type().isUnknownType() ||
+		getTo().type().isUnknownType() ||
+		getTo().type().equals(getFrom().type());
+		
+	syn boolean Return.returnBoolean() = 
+		getExpr().type().equals(getExpr().boolType());
+	syn boolean Var_del.initBoolean(){
+		if(hasDefault()){
+			return getDefault().type().equals(getDefault().boolType());
+		}
+		else return false;
+	}
+	/*syn boolean If_brace.conditionInt() = 
+		getExpr().type().equals(getExpr().intType());
+	syn boolean If_one.conditionInt() = 
+		getExpr().type().equals(getExpr().intType());
+		
+	syn boolean While_brace.conditionInt() = 
+		getExpr().type().equals(getExpr().intType());	
+	syn boolean While_one.conditionInt() = 
+		getExpr().type().equals(getExpr().intType());*/
+
+	syn boolean IfStmt.conditionInt() = 
+		getExpr().type().equals(getExpr().intType());
+		
+	syn boolean WhileStmt.conditionInt() = 
+		getExpr().type().equals(getExpr().intType());
+	
+	syn boolean Less.compatibleTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+	
+	syn boolean Great.compatibleTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+	
+	syn boolean LessEq.compatibleTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+	
+	syn boolean GreatEq.compatibleTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+	
+	syn boolean Eq.compatibleTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+		
+	syn boolean NotEq.compatibleTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+		
+	syn boolean Mul.bothIntTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+	syn boolean Div.bothIntTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+	syn boolean Remi.bothIntTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+	syn boolean Plus.bothIntTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+	syn boolean Minus.bothIntTypes() = 
+		getLeft().type().isUnknownType() ||
+		getRight().type().isUnknownType() ||
+		(getLeft().type().isIntType() && getRight().type().isIntType());
+		 
+	syn boolean Minn.isInt() = 
+		getExpr().type().isIntType();
+	
+	syn boolean Func_call.isInt() {
+	 	for(Expr e : getExprs()){
+	 		if(!e.type().isIntType())
+	 			return false;
+	 	}
+	 	return true;
+	 }
+	 
+	 syn boolean Func_call_stmt.isInt() {
+	 	for(Expr e : getExprs()){
+	 		if(!e.type().isIntType())
+	 			return false;
+	 	}
+	 	return true;
+	 }
+}

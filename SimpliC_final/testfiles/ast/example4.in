@@ -1,0 +1,11 @@
+int main() {
+int a;
+int b;
+a = read();
+b = read();
+print(gcd1(a, b));
+print(gcd2(a, b));
+int diff = gcd1(a, b) - gcd2(a, b);
+print(diff);
+return 0;
+}

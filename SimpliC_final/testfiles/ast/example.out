@@ -1,0 +1,37 @@
+Program
+  List
+    Func_del
+      IdFun ID="gcd1"
+      List
+        Parafactor
+          IdVar ID="a"
+        Parafactor
+          IdVar ID="b"
+      List
+        WhileStmt
+          NotEq
+            IdUse ID="a"
+            IdUse ID="b"
+          Block
+            List
+              IfStmt
+                Great
+                  IdUse ID="a"
+                  IdUse ID="b"
+                Block
+                  List
+                    Asst
+                      IdUse ID="a"
+                      Minus
+                        IdUse ID="a"
+                        IdUse ID="b"
+                Opt
+                  Block
+                    List
+                      Asst
+                        IdUse ID="b"
+                        Minus
+                          IdUse ID="b"
+                          IdUse ID="a"
+        Return
+          IdUse ID="a"

@@ -1,0 +1,4 @@
+Error at line 2: symbol 'c' is not declared
+Error at line 5: the calling of symbol 'print' is wrong
+Error at line 7: symbol 'gcd2' is not declared
+Error at line 7: the calling of symbol 'gcd2' is wrong

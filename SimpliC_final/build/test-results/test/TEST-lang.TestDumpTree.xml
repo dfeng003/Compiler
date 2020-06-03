@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="lang.TestDumpTree" tests="4" skipped="0" failures="0" errors="0" timestamp="2019-10-25T10:46:55" hostname="DESKTOP-HLQTRRR" time="0.116">
+  <properties/>
+  <testcase name="runTest[example.in]" classname="lang.TestDumpTree" time="0.065"/>
+  <testcase name="runTest[example2.in]" classname="lang.TestDumpTree" time="0.013"/>
+  <testcase name="runTest[example3.in]" classname="lang.TestDumpTree" time="0.013"/>
+  <testcase name="runTest[example4.in]" classname="lang.TestDumpTree" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

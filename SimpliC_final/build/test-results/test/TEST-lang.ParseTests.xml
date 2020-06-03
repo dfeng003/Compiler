@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="lang.ParseTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-10-25T10:46:55" hostname="DESKTOP-HLQTRRR" time="0.085">
+  <properties/>
+  <testcase name="example" classname="lang.ParseTests" time="0.083"/>
+  <testcase name="error" classname="lang.ParseTests" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

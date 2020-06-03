@@ -1,0 +1,9 @@
+aspect UnknownVar {
+	syn nta UnknownVar Program.unknownVar() = new UnknownVar("<unknown>");
+	
+	inh UnknownVar ASTNode.unknownVar();
+	eq Program.getChild().unknownVar() = unknownVar();
+	
+	syn boolean IdVar.isUnknown() = false;
+	eq UnknownVar.isUnknown() = true;
+}

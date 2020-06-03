@@ -1,0 +1,132 @@
+import java.util.Set;
+import java.util.TreeSet;
+
+aspect Errors {
+	public class ErrorMessage implements Comparable<ErrorMessage> {
+		protected final String message;
+		protected final int lineNumber;
+		public ErrorMessage(String message, int lineNumber) {
+			this.message = message;
+			this.lineNumber = lineNumber;
+		}
+		public int compareTo(ErrorMessage other) {
+			if (lineNumber == other.lineNumber) {
+				return message.compareTo(other.message);
+			}
+			return Integer.compare(lineNumber, other.lineNumber); 
+		}
+		public String toString() {
+			return "Error at line " + lineNumber + ": " + message;
+		}
+	} 
+	protected ErrorMessage ASTNode.error(String message) {
+		return new ErrorMessage(message, getLine(getStart()));
+	}
+
+	coll Set<ErrorMessage> Program.errors() [new TreeSet<ErrorMessage>()] with add root Program;
+
+	inh Program ASTNode.program();
+
+	eq Program.getChild().program() = this;
+	
+}
+
+
+aspect ErrorContributions {
+	IdUse contributes error("symbol '" + getID() + "' is not declared")
+		when decl().isUnknown()
+		to Program.errors() for program();
+
+	IdVar contributes error("symbol '" + getID() + "' is already declared!")
+		when isMultiDeclared()
+		to Program.errors() for program();
+		
+	IdCall contributes error("symbol '" + getID() + "' is not declared")
+		when decl().isUnknown()
+		to Program.errors() for program();
+
+	IdFun contributes error("symbol '" + getID() + "' is already declared!")
+		when isMultiDeclared()
+		to Program.errors() for program();
+	
+	IdUse contributes error("the definition of symbol '" + getID() + "' is circular")
+		when isCircular()
+		to Program.errors() for program();
+		
+	IdCall contributes error("the calling of symbol '" + getID() + "' is wrong")
+		when isWrongParaNum()
+		to Program.errors() for program();
+		
+	Asst contributes error("the assignment of symbol '" + getTo().getID() + "' has incompatible types")
+		when !compatibleTypes()
+		to Program.errors() for program();
+		
+	Return contributes error("return boolean type")
+		when returnBoolean()
+		to Program.errors() for program();
+		
+	Var_del contributes error("init boolean type")
+		when initBoolean()
+		to Program.errors() for program();
+		
+	If_one contributes error("int condition")
+		when conditionInt()
+		to Program.errors() for program();
+	If_brace contributes error("int condition")
+		when conditionInt()
+		to Program.errors() for program();	
+		
+	While_one contributes error("int condition")
+		when conditionInt()
+		to Program.errors() for program();
+	While_brace contributes error("int condition")
+		when conditionInt()
+		to Program.errors() for program();
+		
+	Less contributes error("this comparison has incompatible types")
+		when !compatibleTypes()
+		to Program.errors() for program();
+	Great contributes error("this comparison has incompatible types")
+		when !compatibleTypes()
+		to Program.errors() for program();
+	LessEq contributes error("this comparison has incompatible types")
+		when !compatibleTypes()
+		to Program.errors() for program();
+	GreatEq contributes error("this comparison has incompatible types")
+		when !compatibleTypes()
+		to Program.errors() for program();
+	Eq contributes error("this comparison has incompatible types")
+		when !compatibleTypes()
+		to Program.errors() for program();
+	NotEq contributes error("this comparison has incompatible types")
+		when !compatibleTypes()
+		to Program.errors() for program();
+		
+	Mul contributes error("Not both int types")
+		when !bothIntTypes()
+		to Program.errors() for program();
+	Div contributes error("Not both int types")
+		when !bothIntTypes()
+		to Program.errors() for program();
+	Remi contributes error("Not both int types")
+		when !bothIntTypes()
+		to Program.errors() for program();
+	Plus contributes error("Not both int types")
+		when !bothIntTypes()
+		to Program.errors() for program();
+	Minus contributes error("Not both int types")
+		when !bothIntTypes()
+		to Program.errors() for program();
+		
+	Minn contributes error("Not int types")
+		when !isInt()
+		to Program.errors() for program();
+	
+	Func_call contributes error("pass boolean to function")
+		when !isInt()
+		to Program.errors() for program();
+		
+	Func_call_stmt contributes error("pass boolean to function")
+		when !isInt()
+		to Program.errors() for program();
+}

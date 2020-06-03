@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="lang.TestNameAnalysis" tests="6" skipped="0" failures="0" errors="0" timestamp="2019-10-25T10:46:55" hostname="DESKTOP-HLQTRRR" time="0.028">
+  <properties/>
+  <testcase name="runTest[redeclared.in]" classname="lang.TestNameAnalysis" time="0.009"/>
+  <testcase name="runTest[redeclared2.in]" classname="lang.TestNameAnalysis" time="0.003"/>
+  <testcase name="runTest[shadowing1.in]" classname="lang.TestNameAnalysis" time="0.003"/>
+  <testcase name="runTest[shadowing2.in]" classname="lang.TestNameAnalysis" time="0.004"/>
+  <testcase name="runTest[undeclared.in]" classname="lang.TestNameAnalysis" time="0.004"/>
+  <testcase name="runTest[undeclared2.in]" classname="lang.TestNameAnalysis" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,133 @@
+aspect NameAnalysis {
+
+	syn IdVar IdUse.decl() = lookup(getID());
+	syn IdFun IdCall.decl() = lookupf(getID());
+	
+	inh IdVar IdUse.lookup(String name);
+	
+	inh IdFun IdCall.lookupf(String name);
+	
+	syn nta List<Func_del> Program.predefinedFunctions() {
+		List<Func_del> list = new List<Func_del>();
+		// Create objects of type FunctionDecl and add them to the list
+		Func_del read = new Func_del(new IdFun("read"), new List(), new List());
+		list.add(read);
+		Func_del print = new Func_del(new IdFun("print"), 
+			new List(new Parafactor(new IdVar("a"))), new List());
+		list.add(print);
+		return list;
+	} 
+	
+	eq Func_del.getIdFun().paraNum(){
+		return getNumParafactor();
+	}
+	inh int IdFun.paraNum();
+	
+	eq Func_call.getIdCall().callParaNum(){
+		return getNumExpr();
+	}
+	
+	eq Func_call_stmt.getIdCall().callParaNum(){
+		return getNumExpr();
+	}
+	
+	inh int IdCall.callParaNum();
+	
+	syn boolean IdCall.isWrongParaNum() = decl().paraNum() != callParaNum();
+	
+	eq Func_del.getStmt(int index).lookup(String name) {
+		IdVar decl = localLookup(name, index);
+		return !decl.isUnknown() ? decl : lookup(name);
+	}
+	
+	eq Func_del.getParafactor(int index).lookup(String name) {
+		if(getParafactors()!=null){
+			for (int i = 0; i <= index; i++) {
+				if (getParafactor(i).getIdVar().getID().equals(name)) {
+					return getParafactor(i).getIdVar();
+				}
+			} 
+		}
+		return unknownVar();
+	}
+	
+	eq Program.getChild().lookup(String name) = unknownVar();
+	//eq Program.getChild().lookupf(String name) = unknownFun();
+	
+	inh IdVar Func_del.lookup(String name);
+	inh IdFun Func_del.lookupf(String name);
+	
+	eq Program.getChild().lookupf(String name){
+		for(Func_del pre : predefinedFunctions()) {
+			if (pre.getIdFun().getID().equals(name)) {
+				return pre.getIdFun();
+			}
+		} 
+		for(int i = 0; i <= getNumFunc_del()-1; i++) {
+			if (getFunc_del(i).getIdFun().getID().equals(name)) {
+				return getFunc_del(i).getIdFun();
+			}
+		}
+		
+		return unknownFun();
+	}
+	syn IdVar Func_del.localLookup(String name, int index) {
+	
+		if(getParafactors()!=null){
+			for (int i = 0; i <= getNumParafactor()-1; i++) {
+				if (getParafactor(i).getIdVar().getID().equals(name)) {
+					return getParafactor(i).getIdVar();
+				}
+			} 
+		}
+		for(int i = 0; i <= index; i++) {
+			if (getStmt(i).lookupHere().getID().equals(name)) {
+				return getStmt(i).lookupHere();
+			}
+		}
+		return unknownVar();
+	}
+	
+	syn IdVar Stmt.lookupHere() = unknownVar();
+	eq Var_del.lookupHere() = getIdVar();
+
+	inh IdVar Block.lookup(String name);
+	
+	eq Block.getStmt(int index).lookup(String name) {
+		IdVar decl = localLookup(name, index);
+		return !decl.isUnknown() ? decl : lookup(name);
+	}
+	
+	syn IdVar Block.localLookup(String name, int index) {
+		
+		for(int i = 0; i <= index; i++) {
+			if (getStmt(i).lookupHere().getID().equals(name)) {
+				return getStmt(i).lookupHere();
+			}
+		}
+		if(lookup(name).getID().equals(name)) {
+			return lookup(name);
+		}
+		return unknownVar();
+	}
+	
+	inh IdVar IdVar.lookup(String name);
+	
+	syn boolean IdVar.isMultiDeclared(){
+		if(lookup(getID()) != this) return true;
+		return false;
+	}
+	inh IdFun IdFun.lookupf(String name);
+	syn boolean IdFun.isMultiDeclared() = lookupf(getID()) != this;
+	
+}
+
+aspect CircularDefinitions {
+	// Identify circular definitions in let expressions 
+	syn boolean IdUse.isCircular() = inExprOf(decl());
+	inh boolean IdUse.inExprOf(IdVar decl);
+	inh boolean Var_del.inExprOf(IdVar decl);
+	eq  Var_del.getDefault().inExprOf(IdVar decl)
+		= getIdVar() == decl || inExprOf(decl); 
+	eq Program.getChild().inExprOf(IdVar decl) = false;
+}

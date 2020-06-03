@@ -1,0 +1,31 @@
+import java.util.Set;
+import java.util.TreeSet;
+
+aspect FunctionCalls {
+
+	coll Set<Func_del> Func_del.functionCalls() [new TreeSet<Func_del>()] with add root Func_del;
+	eq Func_del.getIdFun().func_del() = this;
+	inh Func_del IdFun.func_del();
+	eq Func_del.getChild().in_func() = this;
+	inh Func_del IdCall.in_func();
+	
+	syn Set<Func_del> Func_del.reachable() circular [new TreeSet<Func_del>()] {
+		Set<Func_del> funcs = new TreeSet<Func_del>();
+		for(Func_del fun : functionCalls()){
+			funcs.add(fun);
+			for(Func_del ff : fun.reachable()){
+				funcs.add(ff);
+			}
+		}
+		return funcs;
+	}
+	
+}
+
+
+aspect CallsContributions {
+
+	IdCall contributes decl().func_del()
+		when !decl().isUnknown()
+		to Func_del.functionCalls() for in_func();
+}
